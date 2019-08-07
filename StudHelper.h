@@ -13,6 +13,7 @@
 #include <chrono>
 #include <climits>
 #include <algorithm>
+#include <locale>
 
 #include <termios.h>
 #include <unistd.h>

@@ -11,15 +11,10 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="739f2151-24bf-4714-bc32-efa4bfa353ee" name="Default Changelist" comment="">
+    <list default="true" id="739f2151-24bf-4714-bc32-efa4bfa353ee" name="Default Changelist" comment="Fixed previous commit">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README" beforeDir="false" afterPath="$PROJECT_DIR$/README" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/StudHelper.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/StudHelper.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/StudHelper.h" beforeDir="false" afterPath="$PROJECT_DIR$/StudHelper.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/StudHelper.dir/CXX.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/StudHelper.dir/CXX.includecache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/StudHelper.dir/StudHelper.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/StudHelper.dir/StudHelper.cpp.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/StudHelper.dir/main.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/StudHelper.dir/main.cpp.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/StudHelper" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/StudHelper" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -121,5 +116,9 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Fixed previous commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed previous commit" />
   </component>
 </project>
