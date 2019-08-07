@@ -108,7 +108,7 @@ menu:
 
             stud_helper.read_file();
 
-            cout << "Press 'm' to go to the menu or any other button to exit the program: ";
+            cout << "Press 'm' to go to the menu or any other button to exit the program" << endl;
 
             if (int ch = getch(); ch == static_cast<int>('m'))
                 goto menu;
@@ -152,7 +152,7 @@ menu:
 
                     stud_helper.write_data(marks, subj, true);
 
-                    cout << "Press 'm' to go to the menu or any other button to exit the program: ";
+                    cout << "Press 'm' to go to the menu or any other button to exit the program" << endl;
 
                     if (int ch = getch(); ch == static_cast<int>('m'))
                         goto menu;
@@ -167,7 +167,7 @@ menu:
 
                     cout << "Enter name of subject to be added: ";
                     getline(cin, subj);
-                    cout << "Now enter marks to be added (press 'd' when you've done):" << endl;
+                    cout << "Now enter marks to be added (enter 'd' when you've done):" << endl;
 
                     while(true) {
                         int num = 0;
@@ -185,7 +185,7 @@ menu:
 
                     stud_helper.write_data(marks, subj, false);
 
-                    cout << "Press 'm' to go to the menu or any other button to exit the program: ";
+                    cout << "Press 'm' to go to the menu or any other button to exit the program" << endl;
 
                     if (int ch = getch(); ch == static_cast<int>('m'))
                         goto menu;

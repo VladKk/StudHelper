@@ -13,8 +13,12 @@
   <component name="ChangeListManager">
     <list default="true" id="739f2151-24bf-4714-bc32-efa4bfa353ee" name="Default Changelist" comment="Fixed previous commit">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/StudHelper.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/StudHelper.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/StudHelper.h" beforeDir="false" afterPath="$PROJECT_DIR$/StudHelper.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/StudHelper.dir/StudHelper.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/StudHelper.dir/StudHelper.cpp.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/StudHelper.dir/main.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/StudHelper.dir/main.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/StudHelper" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/StudHelper" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -51,6 +55,7 @@
   <component name="ProjectId" id="1OjiyTyhIa8UlsRxEzEOf39VpTi" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
@@ -111,11 +116,26 @@
       <workItem from="1564654998475" duration="6220000" />
       <workItem from="1564829650584" duration="5762000" />
       <workItem from="1565011238595" duration="6056000" />
+      <workItem from="1565178800623" duration="742000" />
+      <workItem from="1565189308750" duration="2152000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Fixed previous commit" />

@@ -3,7 +3,7 @@
 void StudHelper::create_file(const string& filename) {
     m_book = xlCreateXMLBook();
 
-    Sheet* sheet = m_book->addSheet("Marks");
+    m_sheet = m_book->addSheet("Marks");
 
     Font* textFont = m_book->addFont();
     textFont->setSize(12);
@@ -14,18 +14,18 @@ void StudHelper::create_file(const string& filename) {
     textFormat->setAlignH(ALIGNH_CENTER);
     textFormat->setAlignV(ALIGNV_CENTER);
 
-    sheet->insertRow(0, 255);
-    sheet->insertCol(0, 255);
-    sheet->setDisplayGridlines(true);
-    sheet->setCol(sheet->firstCol(), sheet->lastCol(), -1, textFormat);
-    sheet->setRow(sheet->firstRow(), -1, textFormat);
+    m_sheet->insertRow(0, 255);
+    m_sheet->insertCol(0, 255);
+    m_sheet->setDisplayGridlines(true);
+    m_sheet->setCol(m_sheet->firstCol(), m_sheet->lastCol(), -1, textFormat);
+    m_sheet->setRow(m_sheet->firstRow(), -1, textFormat);
 
     char username[LOGIN_NAME_MAX];
     getlogin_r(username, LOGIN_NAME_MAX);
 
-    if(string lang = locale("").name(); lang.find("ru"))
+    if(string lang = locale("").name(); lang.find("ru_") != string::npos)
         m_path = m_path + "/home/" + username + "/Документы/" + filename + "SH.xlsx";
-    else if (lang.find("en"))
+    else if (lang.find("en_") != string::npos)
         m_path = m_path + "/home/" + username + "/Documents/" + filename + "SH.xlsx";
     else
         m_path = "";
@@ -39,33 +39,33 @@ void StudHelper::open_file(const string& path) {
     m_book = xlCreateXMLBook();
 
     m_book->load(m_path.c_str());
+
+    m_sheet = get_sheet_by_name(m_book, "Marks");
 }
 
 void StudHelper::read_file() {
-    Sheet* sheet = get_sheet_by_name(m_book, "Marks");
-
-    if(sheet) {
-        for(int row = sheet->firstRow(); row < sheet->lastRow(); ++row) {
-            for(int col = sheet->firstCol(); col < sheet->lastCol(); ++col) {
-                CellType cellType = sheet->cellType(row, col);
+    if(m_sheet) {
+        for(int row = m_sheet->firstRow(); row < m_sheet->lastRow(); ++row) {
+            for(int col = m_sheet->firstCol(); col < m_sheet->lastCol(); ++col) {
+                CellType cellType = m_sheet->cellType(row, col);
 
                 switch(cellType) {
                     case CELLTYPE_NUMBER: {
-                        double d = sheet->readNum(row, col);
+                        double d = m_sheet->readNum(row, col);
 
                         cout << d;
 
                         break;
                     }
                     case CELLTYPE_STRING: {
-                        const char* s = sheet->readStr(row, col);
+                        const char* s = m_sheet->readStr(row, col);
 
                         cout << (s ? s : "null");
 
                         break;
                     }
                     case CELLTYPE_BOOLEAN: {
-                        bool b = sheet->readBool(row, col);
+                        bool b = m_sheet->readBool(row, col);
 
                         cout << (b ? "true" : "false");
 
@@ -91,24 +91,22 @@ void StudHelper::read_file() {
 }
 
 void StudHelper::write_data(vector<double>& marks, const string& subj, bool has_subj = false) {
-    Sheet* sheet = get_sheet_by_name(m_book, "Marks");
+    if(m_sheet) {
+        const int row = m_sheet->firstRow();
 
-    if(sheet) {
-        const int row = sheet->firstRow();
-
-        for (int col = sheet->firstCol(), i = (int) marks.size() - 1; col < sheet->lastCol() || i >= 0; ++col, --i) {
-            CellType cellType = sheet->cellType(row, col);
+        for (int col = m_sheet->firstCol(), i = (int) marks.size() - 1; col < m_sheet->lastCol() || i >= 0; ++col, --i) {
+            CellType cellType = m_sheet->cellType(row, col);
 
             if (has_subj) {
                 if (cellType == CELLTYPE_STRING) {
-                    const char *str = sheet->readStr(row, col);
+                    const char *str = m_sheet->readStr(row, col);
 
                     if (get_all_to_uppercase(str) == get_all_to_uppercase(subj)) {
-                        for (int sub_row = row; sub_row < sheet->lastRow(); ++sub_row) {
-                            CellType sub_cellType = sheet->cellType(sub_row, col);
+                        for (int sub_row = row; sub_row < m_sheet->lastRow(); ++sub_row) {
+                            CellType sub_cellType = m_sheet->cellType(sub_row, col);
 
                             if (sub_cellType == CELLTYPE_BLANK || sub_cellType == CELLTYPE_EMPTY)
-                                sheet->writeNum(sub_row, col, marks[i]);
+                                m_sheet->writeNum(sub_row, col, marks[i]);
                         }
 
                         break;
@@ -116,10 +114,10 @@ void StudHelper::write_data(vector<double>& marks, const string& subj, bool has_
                 }
             } else {
                 if (cellType == CELLTYPE_EMPTY || cellType == CELLTYPE_BLANK) {
-                    sheet->writeStr(row, col, subj.c_str());
+                    m_sheet->writeStr(row, col, subj.c_str());
 
-                    for (int sub_row = row; sub_row < sheet->lastRow(); ++sub_row)
-                        sheet->writeNum(sub_row, col, marks[i]);
+                    for (int sub_row = row; sub_row < m_sheet->lastRow(); ++sub_row)
+                        m_sheet->writeNum(sub_row, col, marks[i]);
 
                     break;
                 }
@@ -133,25 +131,24 @@ void StudHelper::write_data(vector<double>& marks, const string& subj, bool has_
 }
 
 vector<unsigned> StudHelper::get_subject(const string& subj, bool get_sum = false) {
-    Sheet* sheet = get_sheet_by_name(m_book, "Marks");
     vector<unsigned> marks;
 
-    if(sheet) {
+    if(m_sheet) {
         unsigned sum = 0;
 
-        for (int row = sheet->firstRow(); row < sheet->lastRow(); ++row) {
-            for (int col = sheet->firstCol(); col < sheet->lastCol(); ++col) {
-                CellType cellType = sheet->cellType(row, col);
+        for (int row = m_sheet->firstRow(); row < m_sheet->lastRow(); ++row) {
+            for (int col = m_sheet->firstCol(); col < m_sheet->lastCol(); ++col) {
+                CellType cellType = m_sheet->cellType(row, col);
 
                 if (cellType == CELLTYPE_STRING) {
-                    const char *s = sheet->readStr(row, col);
+                    const char *s = m_sheet->readStr(row, col);
 
                     if (get_all_to_uppercase(s) == get_all_to_uppercase(subj)) {
-                        for (int sub_row = sheet->firstRow(); sub_row < sheet->lastRow(); ++sub_row) {
-                            CellType sub_cellType = sheet->cellType(sub_row, col);
+                        for (int sub_row = m_sheet->firstRow(); sub_row < m_sheet->lastRow(); ++sub_row) {
+                            CellType sub_cellType = m_sheet->cellType(sub_row, col);
 
                             if (sub_cellType == CELLTYPE_NUMBER) {
-                                double d = sheet->readNum(sub_row, col);
+                                double d = m_sheet->readNum(sub_row, col);
 
                                 marks.push_back(static_cast<unsigned>(d));
 

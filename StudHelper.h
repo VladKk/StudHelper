@@ -28,12 +28,13 @@ class StudHelper {
 private:
     string m_path;
     Book* m_book;
+    Sheet* m_sheet;
 
     static string get_all_to_uppercase(string str);
     static Sheet* get_sheet_by_name(Book* book, const char* name);
 
 public:
-    StudHelper() : m_path(""), m_book(nullptr) {}
+    StudHelper() : m_path(""), m_book(nullptr), m_sheet(nullptr) {}
 
     ~StudHelper() { m_book->save(m_path.c_str()); m_book->release(); }
 
