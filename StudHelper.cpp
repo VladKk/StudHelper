@@ -23,7 +23,12 @@ void StudHelper::create_file(const string& filename) {
     char username[LOGIN_NAME_MAX];
     getlogin_r(username, LOGIN_NAME_MAX);
 
-    m_path = m_path + "/home/" + username + "/Документы/" + filename + "SH.xlsx";
+    if(string lang = locale("").name(); lang.find("ru"))
+        m_path = m_path + "/home/" + username + "/Документы/" + filename + "SH.xlsx";
+    else if (lang.find("en"))
+        m_path = m_path + "/home/" + username + "/Documents/" + filename + "SH.xlsx";
+    else
+        m_path = "";
 
     m_book->save(m_path.c_str());
 }

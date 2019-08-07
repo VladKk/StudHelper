@@ -35,12 +35,18 @@ climits
 -
 algorithm
 -
+locale
+-
 termios.h
 -
 unistd.h
 -
 libxl.h
 /home/vladpc/Programming/C++/Projects/StudHelper/libxl.h
+
+/home/vladpc/Programming/C++/Projects/StudHelper/main.cpp
+StudHelper.h
+/home/vladpc/Programming/C++/Projects/StudHelper/StudHelper.h
 
 /usr/include/LibXL/IAutoFilterT.h
 setup.h

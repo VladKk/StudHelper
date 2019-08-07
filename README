@@ -1,5 +1,8 @@
 This is my first program.
 Tried to make helper to track students' marks and give useful info.
-!!!PROGRAM WORKS ONLY WITH MS EXCEL!!!
+!!!THIS PROGRAM WORKS ONLY WITH MS EXCEL!!!
+!!!TESTED ONLY IN LINUX DEBIAN!!!
+!!!WORKS ONLY WITH RUSSIAN AND ENGLISH SYSTEM LANGUAGE!!!
+StudHelper was created with help of LibXL
 If you have suggestions, write: mrvlad008@gmail.com
 May be new features in the future.
