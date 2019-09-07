@@ -6,10 +6,6 @@
 
 #IncludeRegexTransform: 
 
-/home/vladpc/Programming/C++/Projects/StudHelper/StudHelper.cpp
-StudHelper.h
-/home/vladpc/Programming/C++/Projects/StudHelper/StudHelper.h
-
 /home/vladpc/Programming/C++/Projects/StudHelper/StudHelper.h
 iostream
 -
@@ -36,6 +32,8 @@ climits
 algorithm
 -
 locale
+-
+filesystem
 -
 termios.h
 -

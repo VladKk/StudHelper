@@ -13,9 +13,13 @@
   <component name="ChangeListManager">
     <list default="true" id="739f2151-24bf-4714-bc32-efa4bfa353ee" name="Default Changelist" comment="Fixed previous commit">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/StudHelper.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/StudHelper.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/StudHelper.h" beforeDir="false" afterPath="$PROJECT_DIR$/StudHelper.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tested Files/testSH.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/Tested Files/testSH.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/StudHelper.dir/CXX.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/StudHelper.dir/CXX.includecache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/StudHelper.dir/StudHelper.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/StudHelper.dir/StudHelper.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/StudHelper.dir/link.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/StudHelper.dir/link.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/StudHelper.dir/main.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/StudHelper.dir/main.cpp.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/StudHelper" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/StudHelper" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
@@ -118,6 +122,16 @@
       <workItem from="1565011238595" duration="6056000" />
       <workItem from="1565178800623" duration="742000" />
       <workItem from="1565189308750" duration="2152000" />
+      <workItem from="1565613603724" duration="6969000" />
+      <workItem from="1566466428895" duration="3054000" />
+      <workItem from="1566578912548" duration="160000" />
+      <workItem from="1566579129235" duration="58000" />
+      <workItem from="1566579265367" duration="83000" />
+      <workItem from="1566633634803" duration="29000" />
+      <workItem from="1566726469442" duration="1856000" />
+      <workItem from="1566754100207" duration="201000" />
+      <workItem from="1567072819071" duration="7848000" />
+      <workItem from="1567162396510" duration="1095000" />
     </task>
     <servers />
   </component>
