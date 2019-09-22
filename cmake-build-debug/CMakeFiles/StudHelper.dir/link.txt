@@ -1,1 +1,1 @@
-/usr/bin/c++  -g   CMakeFiles/StudHelper.dir/main.cpp.o CMakeFiles/StudHelper.dir/StudHelper.cpp.o  -o StudHelper /usr/lib/x86_64-linux-gnu/libxl.so -lstdc++fs 
+/usr/bin/c++   -lpqxx -lpq -g   CMakeFiles/StudHelper.dir/main.cpp.o CMakeFiles/StudHelper.dir/StudHelper.cpp.o  -o StudHelper /usr/local/lib/libpqxx.a /usr/lib/x86_64-linux-gnu/libpq.so 

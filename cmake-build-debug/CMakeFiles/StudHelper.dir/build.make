@@ -94,7 +94,8 @@ StudHelper_EXTERNAL_OBJECTS =
 StudHelper: CMakeFiles/StudHelper.dir/main.cpp.o
 StudHelper: CMakeFiles/StudHelper.dir/StudHelper.cpp.o
 StudHelper: CMakeFiles/StudHelper.dir/build.make
-StudHelper: /usr/lib/x86_64-linux-gnu/libxl.so
+StudHelper: /usr/local/lib/libpqxx.a
+StudHelper: /usr/lib/x86_64-linux-gnu/libpq.so
 StudHelper: CMakeFiles/StudHelper.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/vladpc/Programming/C++/Projects/StudHelper/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable StudHelper"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/StudHelper.dir/link.txt --verbose=$(VERBOSE)
