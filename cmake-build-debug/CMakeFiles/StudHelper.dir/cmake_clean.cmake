@@ -1,8 +1,8 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/StudHelper.dir/main.cpp.o"
   "CMakeFiles/StudHelper.dir/StudHelper.cpp.o"
-  "StudHelper.pdb"
+  "CMakeFiles/StudHelper.dir/main.cpp.o"
   "StudHelper"
+  "StudHelper.pdb"
 )
 
 # Per-language clean rules from dependency scanning.

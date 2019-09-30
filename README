@@ -2,6 +2,5 @@ This is my first program.
 Tried to make helper to track students' marks and give useful info.
 Works with PostgreSQL
 !!!TESTED ONLY IN LINUX DEBIAN!!!
-!!!WORKS ONLY WITH RUSSIAN AND ENGLISH SYSTEM LANGUAGE!!!
 If you have suggestions, write: mrvlad008@gmail.com
 May be new features in the future.

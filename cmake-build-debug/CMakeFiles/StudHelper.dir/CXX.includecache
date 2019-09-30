@@ -6,3 +6,25 @@
 
 #IncludeRegexTransform: 
 
+/home/vladpc/Programming/C++/Projects/StudHelper/StudHelper.cpp
+StudHelper.h
+/home/vladpc/Programming/C++/Projects/StudHelper/StudHelper.h
+
+/home/vladpc/Programming/C++/Projects/StudHelper/StudHelper.h
+iostream
+-
+string
+-
+ctime
+-
+chrono
+-
+list
+-
+termios.h
+-
+unistd.h
+-
+pqxx/pqxx
+-
+
