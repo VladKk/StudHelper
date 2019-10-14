@@ -6,15 +6,21 @@
 #include <ctime>
 #include <chrono>
 #include <list>
+#include <cstdlib>
 
 #include <termios.h>
 #include <unistd.h>
 
 #include <pqxx/pqxx>
 
+#include <arpa/inet.h>
+
+#include <SFML/Network.hpp>
+
 using namespace std;
 using namespace chrono;
 using namespace pqxx;
+using namespace sf;
 
 //Using Singleton to create object
 class StudHelper;
@@ -31,9 +37,11 @@ public:
 
 class StudHelper {
 private:
+//Singleton fields
     static StudHelper* m_instance;
     static StudHelperDestroyer m_destroyer;
 
+//Main fields
     string m_dbname;
     string m_name;
     string m_password;
@@ -52,9 +60,11 @@ public:
     StudHelper(const StudHelper&) = delete;
     StudHelper& operator=(StudHelper&) = delete;
 
+//Make class instance
     static StudHelper& get_instance(const string& dbname, const string& name, const string& password,
             const string& hostaddr, const string& port);
 
+//Prototypes of main functions
     void check_connection();
     void create_table();
     void get_data();
@@ -75,9 +85,13 @@ protected:
 
     ~StudHelper() = default;
 
+//Make destroyer class as friend
     friend class StudHelperDestroyer;
 };
 
+//Prototypes of functions-helpers
 int getch();
+bool is_port(const string& ip, const string& port);
+bool is_ip(const string& ip);
 
 #endif // STUDHELPER_H

@@ -9,18 +9,20 @@ To start working with StudHelper, just install it from GitHub and unpack it.
 ### Prerequisites
 
 To work with StudHelper, you need to have PostgreSQL to be installed.
-For Debian:
+
+##### For Debian:
+
 First, you need to import PostgreSQL packages signing key on your system. Use the below command to import the key.
 
 ```
-wget -q https://www.postgresql.org/media/keys/ACCC4CF8.asc -O - | sudo apt-key add -
+wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+sudo apt-get update
 ```
 
-Now add PostgreSQL apt repository in your system as per your operating system. These are suggested on official PostgreSQL [website](https://www.postgresql.org/download/linux/ubuntu/) using following command.
+Now add PostgreSQL apt repository in your system as per your operating system. These are suggested on official PostgreSQL [website](https://www.postgresql.org/download/linux/debian/) using following command.
 
 ```
-sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ jessie-pgdg main" >> /etc/apt/sources.list.d/pgdg.list'
-
+deb http://apt.postgresql.org/pub/repos/apt/ YOUR_DEBIAN_VERSION_HERE-pgdg main
 ```
 
 ### Connecting to PostgreSQL
@@ -48,8 +50,9 @@ Your PostgreSQL installation has been completed successfully.
 
 ## Built With
 
+* [LibXL](http://www.libxl.com) - Excel library (served as a tool for working with MS Excel files on the early versions of StudHelper)
 * [PostgreSQL](https://www.postgresql.org) - database which StudHelper was created with
-* [LibXL](http://www.libxl.com) - Excel library (served as database on the early versions of StudHelper)
+* [SFML](https://www.sfml-dev.org) - some features (checking if port is open)
 
 ## Contributing
 
@@ -68,5 +71,5 @@ For the versions available, see the [StudHelper](https://github.com/VladKk/StudH
 
 ## Acknowledgments
 
-* This is my first projects and it has a lot of mistakes, so don't judge strictly)
+* This is my first project and it has a lot of mistakes, so don't judge strictly:)
 

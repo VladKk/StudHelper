@@ -3,19 +3,39 @@
 int main() {
     system("clear");
 
+//Connection to the database
     cout << "\t\tWelcome to StudHelper!\t\t" << endl;
     cout << "Enter data to connect to database:" << endl;
 
-    string dbname, name, password,
-            hostaddr = "127.0.0.1",
-            port = "5432";
+    string dbname, name, password, hostaddr, port;
 
+//Enter needed information
     cout << "Enter username: ";
-    cin >> name;
-    cout << "Enter password: ";
-    cin >> password;
+    getline(cin, name);
+
+//Get password (is hidden)
+    password = getpass("Enter password: ");
+
     cout << "Enter database name: ";
-    cin >> dbname;
+    getline(cin, dbname);
+
+//Enter IPv4 + check if it's right
+    do {
+        cout << "Enter host IPv4 address (enter 'd' to use localhost): ";
+        getline(cin, hostaddr);
+
+        if (hostaddr == "d")
+            hostaddr = "127.0.0.1";
+    } while(!is_ip(hostaddr));
+
+//Eneter port + check if it's opened
+    do {
+        cout << "Enter port (enter 'd' to use default port): ";
+        getline(cin, port);
+
+        if (port == "d")
+            port = "5432";
+    } while(!is_port(hostaddr, port));
 
 //Create StudHelper object
     StudHelper& stud_helper = StudHelper::get_instance(dbname, name, password, hostaddr, port);
@@ -65,7 +85,7 @@ int main() {
 //Exit the program
         case static_cast<int>('e'):
             exit(0);
-//If needed button wasn't pressed, return to the pre menu
+//If needed button wasn't pressed, retry
         default:
             goto preMenu;
     }
@@ -112,7 +132,7 @@ createTable:
 //Exit the program
         case static_cast<int>('e'):
             exit(0);
-//If needed button wasn't pressed, return to the pre menu
+//If needed button wasn't pressed, retry
         default:
             goto createTable;
     }
@@ -122,106 +142,147 @@ createTable:
     system("clear");
 
     cout << "Press certain button to select function:" << endl;
-    cout << "'d' - get data from table" << endl;
-    cout << "'s' - get certain subject" << endl;
-    cout << "'z' - delete certain subject" << endl;
-    cout << "'a' - add marks to the table" << endl;
-    cout << "'x' - delete mark from the table" << endl;
-    cout << "'c' - change mark in the table" << endl;
-    cout << "'p' - get progress information" << endl;
-    cout << "'i' - get connection information" << endl;
-    cout << "'h' - print help information" << endl;
+    cout << "'d' - get data" << endl;
+    cout << "'a' - add data" << endl;
+    cout << "'x' - delete data" << endl;
+    cout << "'c' - change data" << endl;
+    cout << "'i' - get information (academic performance/connection/developer)" << endl;
     cout << "'e' - exit the program" << endl;
 
 //Make choice depending on pressed button
     switch(getch()) {
-//Create table
+//Get needed data
         case static_cast<int>('d'): {
+get_data_retry:
             system("clear");
 
-            stud_helper.get_data();
+            cout << "Press certain button to select function:" << endl;
+            cout << "'a' - get all data" << endl;
+            cout << "'s' - get certain subject" << endl;
+            cout << "'m' - go to the menu" << endl;
+            cout << "'e' - exit the program" << endl;
 
-            cout << "Press 'm' to go to the menu or any other button to exit the program" << endl;
+            switch(getch()) {
+//Get all data
+                case static_cast<int>('a'): {
+                    system("clear");
 
-            int ch = getch();
+                    stud_helper.get_data();
 
-            if (ch == static_cast<int>('m'))
-                goto menu;
+                    cout << "Press 'm' to go to the menu or any other button to exit the program" << endl;
+
+                    int ch = getch();
+
+                    if (ch == static_cast<int>('m'))
+                        goto menu;
+
+                    break;
+                }
+//Get only needed subject
+                case static_cast<int>('s'): {
+                    system("clear");
+
+                    string subj;
+
+                    cout << "Enter subject name: ";
+                    getline(cin, subj);
+
+                    stud_helper.get_subject(subj);
+
+                    cout << "Press 'm' to go to the menu or any other button to exit the program" << endl;
+
+                    int ch = getch();
+
+                    if (ch == static_cast<int>('m'))
+                        goto menu;
+
+                    break;
+                }
+//Go to the menu
+                case static_cast<int>('m'):
+                    goto menu;
+//Exit the program
+                case static_cast<int>('e'):
+                    exit(0);
+//If needed button wasn't pressed, retry
+                default:
+                    goto get_data_retry;
+            }
 
             break;
         }
-        case static_cast<int>('s'): {
-            system("clear");
-
-            string subj;
-
-            cout << "Enter subject name (use '_' instead of space): ";
-            cin >> subj;
-
-            stud_helper.get_subject(subj);
-
-            cout << "Press 'm' to go to the menu or any other button to exit the program" << endl;
-
-            int ch = getch();
-
-            if (ch == static_cast<int>('m'))
-                goto menu;
-
-            break;
-        }
-        case static_cast<int>('z'): {
-            system("clear");
-
-            string subj;
-
-            cout << "Enter subject name (use '_' instead of space): ";
-            cin >> subj;
-
-            stud_helper.delete_subject(subj);
-
-            goto menu;
-        }
+//Add data to the table
         case static_cast<int>('a'): {
             system("clear");
 
             string subj;
             list<int> marks;
 
-            cout << "Enter subject name (use '_' instead of space): ";
-            cin >> subj;
+            cout << "Enter subject name: ";
+            getline(cin, subj);
 
             cout << "Enter marks (enter 'd' when you done):" << endl;
 
-            while(true) {
-                int temp = 0;
+            string temp;
 
-                cout << "-> ";
-                cin >> temp;
-
-                marks.push_back(temp);
-
-                if(int ch = getchar(); ch == static_cast<int>('d'))
-                    break;
-            }
-
-            marks.pop_back();
+//Add data to the list, as method works with it
+            while(cout << "-> " && getline(cin, temp) && temp != "d")
+                marks.push_back(stoi(temp));
 
             stud_helper.insert_data(marks, subj);
 
             goto menu;
         }
+//Delete needed data from the table
         case static_cast<int>('x'): {
+delete_data_retry:
             system("clear");
 
-            int id = 0;
+            cout << "Press certain button to select function:" << endl;
+            cout << "'s' - delete certain subject" << endl;
+            cout << "'d' - delete certain mark" << endl;
+            cout << "'m' - go to the menu" << endl;
+            cout << "'e' - exit the program" << endl;
 
-            cout << "Enter mark ID: ";
-            cin >> id;
+            switch(getch()) {
+//Delete whole subject
+                case static_cast<int>('s'): {
+                    system("clear");
 
-            stud_helper.delete_data(id);
+                    string subj;
 
-            goto menu;
+                    cout << "Enter subject name: ";
+                    getline(cin, subj);
+
+                    stud_helper.delete_subject(subj);
+
+                    goto menu;
+                }
+//Delete certain mark by its ID
+                case static_cast<int>('d'): {
+                    int id = 0;
+
+                    cout << "Enter mark ID: ";
+                    cin >> id;
+
+                    stud_helper.delete_data(id);
+
+                    goto menu;
+                }
+//Go to the menu
+                case static_cast<int>('m'):
+                    goto menu;
+//Exit the program
+                case static_cast<int>('e'):
+                    exit(0);
+//If needed button wasn't pressed, retry
+                default:
+                    goto delete_data_retry;
+            }
+
+            break;
         }
+//Change mark by its ID
         case static_cast<int>('c'): {
             system("clear");
 
@@ -237,28 +298,86 @@ createTable:
 
             goto menu;
         }
-        case static_cast<int>('p'): {
-            system("clear");
-
-            string subj;
-
-            cout << "Enter subject name (use '_' instead of space): ";
-            cin >> subj;
-
-            retryChoise:
+//Get needed information
+        case static_cast<int>('i'): {
+info_retry:
             system("clear");
 
             cout << "Press certain button to select function:" << endl;
-            cout << "'h' - get progress information of given subject (exam is present)" << endl;
-            cout << "'w' - get progress information of given subject (exam isn't present)" << endl;
+            cout << "'p' - get information about academic performance" << endl;
+            cout << "'c' - get connection information" << endl;
+            cout << "'d' - get information about developer" << endl;
             cout << "'m' - go to the menu" << endl;
             cout << "'e' - exit the program" << endl;
 
             switch(getch()) {
-                case static_cast<int>('h'): {
+//Get information about yours academic performance
+                case static_cast<int>('p'): {
                     system("clear");
 
-                    stud_helper.get_adv_info(subj, true);
+                    string subj;
+
+                    cout << "Enter subject name: ";
+                    getline(cin, subj);
+
+                    retryChoise:
+                    system("clear");
+
+                    cout << "Press certain button to select function:" << endl;
+                    cout << "'y' - get progress information of given subject (exam is present)" << endl;
+                    cout << "'n' - get progress information of given subject (exam isn't present)" << endl;
+                    cout << "'m' - go to the menu" << endl;
+                    cout << "'e' - exit the program" << endl;
+
+                    switch(getch()) {
+//Get information about yours academic performance considering if exam is presented in the subject
+                        case static_cast<int>('y'): {
+                            system("clear");
+
+                            stud_helper.get_adv_info(subj, true);
+
+                            cout << "Press 'm' to go to the menu or any other button to exit the program" << endl;
+
+                            int ch = getch();
+
+                            if (ch == static_cast<int>('m'))
+                                goto menu;
+
+                            break;
+                        }
+//Get information about yours academic performance considering if exam isn't presented in the subject
+                        case static_cast<int>('n'): {
+                            system("clear");
+
+                            stud_helper.get_adv_info(subj, false);
+
+                            cout << "Press 'm' to go to the menu or any other button to exit the program" << endl;
+
+                            int ch = getch();
+
+                            if (ch == static_cast<int>('m'))
+                                goto menu;
+
+                            break;
+                        }
+//Go to the menu
+                        case static_cast<int>('m'):
+                            goto menu;
+//Exit the program
+                        case static_cast<int>('e'):
+                            exit(0);
+//If needed button wasn't pressed, retry
+                        default:
+                            goto retryChoise;
+                    }
+
+                    break;
+                }
+//Get information about connection to database
+                case static_cast<int>('c'): {
+                    system("clear");
+
+                    stud_helper.get_info();
 
                     cout << "Press 'm' to go to the menu or any other button to exit the program" << endl;
 
@@ -269,68 +388,43 @@ createTable:
 
                     break;
                 }
-                case static_cast<int>('w'): {
+//Get information about daveloper
+                case static_cast<int>('d'): {
                     system("clear");
-
-                    stud_helper.get_adv_info(subj, false);
-
-                    cout << "Press 'm' to go to the menu or any other button to exit the program" << endl;
-
-                    int ch = getch();
-
-                    if (ch == static_cast<int>('m'))
-                        goto menu;
-
-                    break;
-                }
-                case static_cast<int>('m'):
-                    goto menu;
-                case static_cast<int>('e'):
-                    exit(0);
-                default:
-                    goto retryChoise;
-            }
-
-            break;
-        }
-        case static_cast<int>('i'): {
-            system("clear");
-
-            stud_helper.get_info();
-
-            cout << "Press 'm' to go to the menu or any other button to exit the program" << endl;
-
-            int ch = getch();
-
-            if (ch == static_cast<int>('m'))
-                goto menu;
-
-            break;
-        }
-//Print helpful information
-        case static_cast<int>('h'): {
-            system("clear");
 
 //Get current date and time
-            time_t time = system_clock::to_time_t(system_clock::now());
+                    time_t time = system_clock::to_time_t(system_clock::now());
 
-            cout << "The program works with PostgreSQL" << endl;
-            cout << "If you have suggestions, write: mrvlad008@gmail.com" << endl;
-            cout << "Developer: Vladislav Koliadenko" << endl;
-            cout << "Current date/time: " << ctime(&time) << endl;
-            cout << "Press 'm' to go to the menu or any other button to exit the program" << endl;
+                    cout << "The program works with PostgreSQL" << endl;
+                    cout << "If you have suggestions, write: mrvlad008@gmail.com" << endl;
+                    cout << "Developer: Vladislav Koliadenko" << endl;
+                    cout << "Current date/time: " << ctime(&time) << endl;
+                    cout << "Press 'm' to go to the menu or any other button to exit the program" << endl;
 
-            int ch = getch();
+                    int ch = getch();
 
-            if (ch == static_cast<int>('m'))
-                goto menu;
+                    if (ch == static_cast<int>('m'))
+                        goto menu;
+
+                    break;
+                }
+//Go to the menu
+                case static_cast<int>('m'):
+                    goto menu;
+//Exit the program
+                case static_cast<int>('e'):
+                    exit(0);
+//If needed button wasn't pressed, retry
+                default:
+                    goto info_retry;
+            }
 
             break;
         }
 //Exit the program
         case static_cast<int>('e'):
             exit(0);
-//If needed button wasn't pressed, return to the pre menu
+//If needed button wasn't pressed, retry
         default:
             goto menu;
     }

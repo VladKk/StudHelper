@@ -6,10 +6,6 @@
 
 #IncludeRegexTransform: 
 
-/home/vladpc/Programming/C++/Projects/StudHelper/StudHelper.cpp
-StudHelper.h
-/home/vladpc/Programming/C++/Projects/StudHelper/StudHelper.h
-
 /home/vladpc/Programming/C++/Projects/StudHelper/StudHelper.h
 iostream
 -
@@ -21,10 +17,20 @@ chrono
 -
 list
 -
+cstdlib
+-
 termios.h
 -
 unistd.h
 -
 pqxx/pqxx
 -
+arpa/inet.h
+-
+SFML/Network.hpp
+-
+
+/home/vladpc/Programming/C++/Projects/StudHelper/main.cpp
+StudHelper.h
+/home/vladpc/Programming/C++/Projects/StudHelper/StudHelper.h
 

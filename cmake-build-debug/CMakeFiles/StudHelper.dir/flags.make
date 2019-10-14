@@ -6,5 +6,5 @@ CXX_FLAGS =  -lpqxx -lpq -g   -std=gnu++17
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = 
+CXX_INCLUDES = -I/home/vladpc/Programming/C++/Projects/StudHelper/SFML_INCLUDE_DIR 
 
