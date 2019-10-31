@@ -23,6 +23,160 @@ StudHelper& StudHelper::get_instance(const string& dbname, const string& name, c
     return* m_instance;
 }
 
+//Method-helper to check if ID generator exists in DB
+bool StudHelper::check_generator() {
+    string sql;
+    bool is_gnrtr = false;
+
+    try {
+//Create connection object and initialize it
+        connection conn("dbname = " + m_dbname + " user = " + m_name + " password = " + m_password +
+                        " hostaddr = " + m_hostaddr + " port = " + m_port);
+
+//Basic check if connection is opened
+        if(!conn.is_open())
+            exit(EXIT_FAILURE);
+
+//Write SQL query
+        sql = "select p.oid::regprocedure "
+                    "from pg_proc p "
+                    "join pg_namespace n "
+                    "on p.pronamespace = n.oid "
+                    "where n.nspname not in ('pg_catalog', 'information_schema');";
+
+//Create non-transactional query
+        nontransaction nontrans(conn);
+        result res(nontrans.exec(sql));
+
+//Start searching for needed functions
+        for(const auto& val1 : res) {
+//If first needed function was found
+            if (val1[0].as<string>() == "id_generator(integer)") {
+//Look for another one
+                for (const auto &val2 : res) {
+//If all the functions were found, stop searching and return true
+                    if(val2[0].as<string>() == "get_id(integer, integer, integer)") {
+                        is_gnrtr = true;
+
+                        break;
+                    }
+                }
+
+                break;
+            }
+        }
+
+        conn.close();
+
+        return is_gnrtr;
+    }
+    catch(const exception& exc) {
+        cerr << exc.what() << endl;
+
+        exit(EXIT_FAILURE);
+    }
+}
+
+void StudHelper::create_generator() {
+    string sql;
+
+    try {
+//Create connection object and initialize it
+        connection conn("dbname = " + m_dbname + " user = " + m_name + " password = " + m_password +
+                        " hostaddr = " + m_hostaddr + " port = " + m_port);
+
+//Basic check if connection is opened
+        if(!conn.is_open())
+            exit(EXIT_FAILURE);
+
+//Write SQL query
+        sql = "create or replace function id_generator(value integer) returns integer "
+                "immutable "
+                "strict "
+                "language plpgsql "
+              "as "
+              "$$ "
+              "declare "
+              "l1 int; "
+              "l2 int; "
+              "r1 int; "
+              "r2 int; "
+              "i int := 0; "
+              "begin "
+                "l1:= (value >> 12) & (4096-1); "
+                "r1:= value & (4096-1); "
+                "while i < 3 loop "
+                    "l2 := r1; "
+                    "r2 := l1 # ((((1366 * r1 + 150889) % 714025) / 714025.0) * (4096-1))::int; "
+                    "l1 := l2; "
+                    "r1 := r2; "
+                    "i := i + 1; "
+                "end loop; "
+                "return ((l1 << 12) + r1); "
+              "end; "
+              "$$;";
+
+//Create and execute transactional query
+        work wrk(conn);
+
+        wrk.exec(sql);
+        wrk.commit();
+
+        conn.close();
+    }
+    catch(const exception& exc) {
+        cerr << exc.what() << endl;
+
+        exit(EXIT_FAILURE);
+    }
+}
+
+void StudHelper::create_id() {
+    string sql;
+
+    try {
+//Create connection object and initialize it
+        connection conn("dbname = " + m_dbname + " user = " + m_name + " password = " + m_password +
+                        " hostaddr = " + m_hostaddr + " port = " + m_port);
+
+//Basic check if connection is opened
+        if(!conn.is_open())
+            exit(EXIT_FAILURE);
+
+//Write SQL query
+        sql = "create or replace function get_id(value integer, max integer, min integer) returns integer "
+                    "immutable "
+                    "strict "
+                    "language plpgsql "
+              "as "
+              "$$ "
+              "begin "
+                "loop "
+                    "value := id_generator(value); "
+                    "exit when value <= max and value >= min; "
+                    "if value = (select id from marks) then "
+                        "value := get_id(value, min, max); "
+                    "end if; "
+                    "end loop; "
+                    "return value; "
+              "end "
+              "$$;";
+
+//Create and execute transactional query
+        work wrk(conn);
+
+        wrk.exec(sql);
+        wrk.commit();
+
+        conn.close();
+    }
+    catch(const exception& exc) {
+        cerr << exc.what() << endl;
+
+        exit(EXIT_FAILURE);
+    }
+}
+
 //Check connection to database
 void StudHelper::check_connection() {
     try {
@@ -31,10 +185,12 @@ void StudHelper::check_connection() {
             " hostaddr = " + m_hostaddr + " port = " + m_port);
 
 //Basic check if connection is opened
-        if(!conn.is_open()) {
-            cerr << "Can't open database" << endl;
+        if(!conn.is_open())
+            exit(EXIT_FAILURE);
 
-            exit(1);
+        if(!check_generator()) {
+            create_generator();
+            create_id();
         }
 
         conn.close();
@@ -42,7 +198,7 @@ void StudHelper::check_connection() {
     catch(const exception& exc) {
         cerr << exc.what() << endl;
 
-        exit(1);
+        exit(EXIT_FAILURE);
     }
 }
 
@@ -58,14 +214,14 @@ bool StudHelper::check_table() {
 
 //Basic check if connection is opened
         if(!conn.is_open())
-            exit(1);
+            exit(EXIT_FAILURE);
 
 //Write SQL query
-        sql = "SELECT EXISTS ("
-                "SELECT * "
-                "FROM information_schema.tables "
-                "WHERE table_schema = 'public' "
-                "AND table_name = 'marks'"
+        sql = "select exists ("
+                "select * "
+                "from information_schema.tables "
+                "where table_schema = 'public' "
+                "and table_name = 'marks'"
                 ");";
 
 //Create non-transactional query
@@ -83,7 +239,7 @@ bool StudHelper::check_table() {
     catch(const exception& exc) {
         cerr << exc.what() << endl;
 
-        exit(1);
+        exit(EXIT_FAILURE);
     }
 }
 
@@ -98,13 +254,13 @@ void StudHelper::create_table() {
 
 //Basic check if connection is opened
         if(!conn.is_open())
-            exit(1);
+            exit(EXIT_FAILURE);
 
 //Write SQL query
-        sql = "CREATE TABLE Marks("
-              "ID INT PRIMARY KEY NOT NULL, "
-              "SUBJECT TEXT NOT NULL, "
-              "MARK INT NOT NULL"
+        sql = "create table marks("
+              "id int primary key not null, "
+              "subject text not null, "
+              "mark int"
               ");";
 
 //Create and execute transactional query
@@ -118,7 +274,7 @@ void StudHelper::create_table() {
     catch(const exception& exc) {
         cerr << exc.what() << endl;
 
-        exit(1);
+        exit(EXIT_FAILURE);
     }
 }
 
@@ -133,12 +289,12 @@ void StudHelper::get_data() {
 
 //Basic check if connection is opened
         if(!conn.is_open())
-            exit(1);
+            exit(EXIT_FAILURE);
 
 //Write SQL query
-        sql = "SELECT * FROM Marks "
-                "GROUP BY id, subject "
-                "ORDER BY subject ASC;";
+        sql = "select * from marks "
+                "group by id, subject "
+                "order by subject asc;";
 
 //Create non-transactional query
         nontransaction nontrans(conn);
@@ -156,7 +312,7 @@ void StudHelper::get_data() {
     catch(const exception& exc) {
         cerr << exc.what() << endl;
 
-        exit(1);
+        exit(EXIT_FAILURE);
     }
 }
 
@@ -172,13 +328,13 @@ void StudHelper::get_subject(const string& subject) {
 
 //Basic check if connection is opened
         if(!conn.is_open())
-            exit(1);
+            exit(EXIT_FAILURE);
 
 //Write SQL query
-        sql = "SELECT * FROM marks "
-                "WHERE subject = '" + subject + "' "
-                "GROUP BY id, subject "
-                "ORDER BY subject ASC;";
+        sql = "select * from marks "
+                "where subject = '" + subject + "' "
+                "group by id, subject "
+                "order by subject asc;";
 
 //Create non-transactional query
         nontransaction nontrans(conn);
@@ -201,7 +357,7 @@ void StudHelper::get_subject(const string& subject) {
     catch(const exception& exc) {
         cerr << exc.what() << endl;
 
-        exit(1);
+        exit(EXIT_FAILURE);
     }
 }
 
@@ -216,11 +372,11 @@ void StudHelper::insert_data(const list<int>& marks, const string& subject) {
 
 //Basic check if connection is opened
         if(!conn.is_open())
-            exit(1);
+            exit(EXIT_FAILURE);
 
 //Automatically write SQL query depending on amount of marks
         for(const auto& val : marks) {
-            sql.append("INSERT INTO marks(id, subject, mark) VALUES((SELECT floor(random() * 900000 + 100000)::int)")
+            sql.append("insert into marks(id, subject, mark) values((select floor(random() * 900000 + 100000)::int)")
                     .append(", '").append(subject).append("', ").append(to_string(val)).append(");");
         }
 
@@ -235,7 +391,7 @@ void StudHelper::insert_data(const list<int>& marks, const string& subject) {
     catch(const exception& exc) {
         cerr << exc.what() << endl;
 
-        exit(1);
+        exit(EXIT_FAILURE);
     }
 }
 
@@ -250,11 +406,11 @@ void StudHelper::delete_data(const int& id) {
 
 //Basic check if connection is opened
         if(!conn.is_open())
-            exit(1);
+            exit(EXIT_FAILURE);
 
 //Write SQL query
-        sql = "DELETE FROM marks "
-                "WHERE id = " + to_string(id) + ';';
+        sql = "delete from marks "
+                "where id = " + to_string(id) + ';';
 
 //Create and execute transactional query
         work wrk(conn);
@@ -267,7 +423,7 @@ void StudHelper::delete_data(const int& id) {
     catch(const exception& exc) {
         cerr << exc.what() << endl;
 
-        exit(1);
+        exit(EXIT_FAILURE);
     }
 }
 
@@ -282,11 +438,11 @@ void StudHelper::delete_subject(const string& subject) {
 
 //Basic check if connection is opened
         if(!conn.is_open())
-            exit(1);
+            exit(EXIT_FAILURE);
 
 //Write SQL query
-        sql = "DELETE FROM marks "
-              "WHERE subject = '" + subject + "';";
+        sql = "delete from marks "
+              "where subject = '" + subject + "';";
 
 //Create and execute transactional query
         work wrk(conn);
@@ -299,7 +455,7 @@ void StudHelper::delete_subject(const string& subject) {
     catch(const exception& exc) {
         cerr << exc.what() << endl;
 
-        exit(1);
+        exit(EXIT_FAILURE);
     }
 }
 
@@ -314,12 +470,12 @@ void StudHelper::change_data(const int& id, const int& mark) {
 
 //Basic check if connection is opened
         if(!conn.is_open())
-            exit(1);
+            exit(EXIT_FAILURE);
 
 //Write SQL query
-        sql = "UPDATE marks "
-                "SET mark = " + to_string(mark) + ' ' +
-                "WHERE id = " + to_string(id) + ';';
+        sql = "update marks "
+                "set mark = " + to_string(mark) + ' ' +
+                "where id = " + to_string(id) + ';';
 
 //Create and execute transactional query
         work wrk(conn);
@@ -332,7 +488,7 @@ void StudHelper::change_data(const int& id, const int& mark) {
     catch(const exception& exc) {
         cerr << exc.what() << endl;
 
-        exit(1);
+        exit(EXIT_FAILURE);
     }
 }
 
@@ -357,12 +513,12 @@ void StudHelper::get_adv_info(const string& subject, bool has_exam = false) {
 
 //Basic check if connection is opened
         if(!conn.is_open())
-            exit(1);
+            exit(EXIT_FAILURE);
 
 //Write SQL query
-        sql = "SELECT id, mark FROM marks "
-                "WHERE subject = '" + subject + "' "
-                "GROUP BY id;";
+        sql = "select id, mark from marks "
+                "where subject = '" + subject + "' "
+                "group by id;";
 
 //Create non-transactional query
         nontransaction nontrans(conn);
@@ -380,20 +536,25 @@ void StudHelper::get_adv_info(const string& subject, bool has_exam = false) {
 //Print sum of all marks
         cout << "Sum of " << subject << " points: " << marks_total << endl;
 
+//Needed points for certain progress
+        const int PTS_EXAM_REQUIRED = 21;
+        const int PTS_CREDIT_REQUIRED = 60;
+        const int PTS_CREDIT_MIN_REQUIRED = 30;
+
 //Print warnings depending on sum of marks and exam presence
         if(has_exam) {
-            if(marks_total < 21)
-                cout << "You should get " << 21 - marks_total << " points to be allowed to the exam!" << endl;
+            if(marks_total < PTS_EXAM_REQUIRED)
+                cout << "You should get " << PTS_EXAM_REQUIRED - marks_total << " points to be allowed to the exam!" << endl;
 
-            if(marks_total < 60)
-                cout << "You should get " << 60 - marks_total << " points to get credit!" << endl;
+            if(marks_total < PTS_CREDIT_REQUIRED)
+                cout << "You should get " << PTS_CREDIT_REQUIRED - marks_total << " points to get credit!" << endl;
         }
         else {
-            if(marks_total < 30)
-                cout << "You should get " << 30 - marks_total << " points to be allowed to get credit!" << endl;
+            if(marks_total < PTS_CREDIT_MIN_REQUIRED)
+                cout << "You should get " << PTS_CREDIT_MIN_REQUIRED - marks_total << " points to be allowed to get credit!" << endl;
 
-            if(marks_total < 60)
-                cout << "You should get " << 60 - marks_total << " points to get credit!" << endl;
+            if(marks_total < PTS_CREDIT_REQUIRED)
+                cout << "You should get " << PTS_CREDIT_REQUIRED - marks_total << " points to get credit!" << endl;
         }
 
         conn.close();
@@ -401,7 +562,7 @@ void StudHelper::get_adv_info(const string& subject, bool has_exam = false) {
     catch(const exception& exc) {
         cerr << exc.what() << endl;
 
-        exit(1);
+        exit(EXIT_FAILURE);
     }
 }
 

@@ -13,22 +13,12 @@
   <component name="ChangeListManager">
     <list default="true" id="739f2151-24bf-4714-bc32-efa4bfa353ee" name="Default Changelist" comment="Fixed previous commit">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/StudHelper.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/StudHelper.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/StudHelper.h" beforeDir="false" afterPath="$PROJECT_DIR$/StudHelper.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeCache.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeCache.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/StudHelper.dir/CXX.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/StudHelper.dir/CXX.includecache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/StudHelper.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/StudHelper.dir/DependInfo.cmake" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/StudHelper.dir/StudHelper.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/StudHelper.dir/StudHelper.cpp.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/StudHelper.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/StudHelper.dir/build.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/StudHelper.dir/flags.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/StudHelper.dir/flags.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/StudHelper.dir/link.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/StudHelper.dir/link.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/StudHelper.dir/main.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/StudHelper.dir/main.cpp.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/StudHelper" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/StudHelper" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/StudHelper.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/StudHelper.cbp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -190,7 +180,15 @@
       <workItem from="1570966896988" duration="61000" />
       <workItem from="1570967013020" duration="98000" />
       <workItem from="1570967144679" duration="624000" />
-      <workItem from="1571043253522" duration="4896000" />
+      <workItem from="1571043253522" duration="5502000" />
+      <workItem from="1571138173954" duration="266000" />
+      <workItem from="1571138505044" duration="761000" />
+      <workItem from="1571295397572" duration="6537000" />
+      <workItem from="1571667813216" duration="172000" />
+      <workItem from="1572281035367" duration="729000" />
+      <workItem from="1572282221709" duration="13000" />
+      <workItem from="1572529682458" duration="45000" />
+      <workItem from="1572529821682" duration="793000" />
     </task>
     <servers />
   </component>

@@ -84,7 +84,7 @@ int main() {
         }
 //Exit the program
         case static_cast<int>('e'):
-            exit(0);
+            exit(EXIT_SUCCESS);
 //If needed button wasn't pressed, retry
         default:
             goto preMenu;
@@ -131,7 +131,7 @@ createTable:
         }
 //Exit the program
         case static_cast<int>('e'):
-            exit(0);
+            exit(EXIT_SUCCESS);
 //If needed button wasn't pressed, retry
         default:
             goto createTable;
@@ -203,7 +203,7 @@ get_data_retry:
                     goto menu;
 //Exit the program
                 case static_cast<int>('e'):
-                    exit(0);
+                    exit(EXIT_SUCCESS);
 //If needed button wasn't pressed, retry
                 default:
                     goto get_data_retry;
@@ -274,7 +274,7 @@ delete_data_retry:
                     goto menu;
 //Exit the program
                 case static_cast<int>('e'):
-                    exit(0);
+                    exit(EXIT_SUCCESS);
 //If needed button wasn't pressed, retry
                 default:
                     goto delete_data_retry;
@@ -365,7 +365,7 @@ info_retry:
                             goto menu;
 //Exit the program
                         case static_cast<int>('e'):
-                            exit(0);
+                            exit(EXIT_SUCCESS);
 //If needed button wasn't pressed, retry
                         default:
                             goto retryChoise;
@@ -413,7 +413,7 @@ info_retry:
                     goto menu;
 //Exit the program
                 case static_cast<int>('e'):
-                    exit(0);
+                    exit(EXIT_SUCCESS);
 //If needed button wasn't pressed, retry
                 default:
                     goto info_retry;
@@ -423,7 +423,7 @@ info_retry:
         }
 //Exit the program
         case static_cast<int>('e'):
-            exit(0);
+            exit(EXIT_SUCCESS);
 //If needed button wasn't pressed, retry
         default:
             goto menu;

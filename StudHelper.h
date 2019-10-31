@@ -55,6 +55,11 @@ private:
     string get_hostaddr() { return m_hostaddr; }
     string get_port() { return m_port; }
 
+//Prototypes of methods-helpers to check if ID generator exists in DB and create it (if needed)
+    bool check_generator();
+    void create_generator();
+    void create_id();
+
 public:
 //Block assignment & copying
     StudHelper(const StudHelper&) = delete;
@@ -78,7 +83,7 @@ public:
     bool check_table();
 
 protected:
-//Protect constructor & destructor from client
+//Protect constructor & destructor from user
     StudHelper(string dbname, string name, string password, string hostaddr, string port)
         : m_dbname(move(dbname)), m_name(move(name)), m_password(move(password)),
           m_hostaddr(move(hostaddr)), m_port(move(port)) {}
