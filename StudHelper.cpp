@@ -23,160 +23,6 @@ StudHelper& StudHelper::get_instance(const string& dbname, const string& name, c
     return* m_instance;
 }
 
-//Method-helper to check if ID generator exists in DB
-bool StudHelper::check_generator() {
-    string sql;
-    bool is_gnrtr = false;
-
-    try {
-//Create connection object and initialize it
-        connection conn("dbname = " + m_dbname + " user = " + m_name + " password = " + m_password +
-                        " hostaddr = " + m_hostaddr + " port = " + m_port);
-
-//Basic check if connection is opened
-        if(!conn.is_open())
-            exit(EXIT_FAILURE);
-
-//Write SQL query
-        sql = "select p.oid::regprocedure "
-                    "from pg_proc p "
-                    "join pg_namespace n "
-                    "on p.pronamespace = n.oid "
-                    "where n.nspname not in ('pg_catalog', 'information_schema');";
-
-//Create non-transactional query
-        nontransaction nontrans(conn);
-        result res(nontrans.exec(sql));
-
-//Start searching for needed functions
-        for(const auto& val1 : res) {
-//If first needed function was found
-            if (val1[0].as<string>() == "id_generator(integer)") {
-//Look for another one
-                for (const auto &val2 : res) {
-//If all the functions were found, stop searching and return true
-                    if(val2[0].as<string>() == "get_id(integer, integer, integer)") {
-                        is_gnrtr = true;
-
-                        break;
-                    }
-                }
-
-                break;
-            }
-        }
-
-        conn.close();
-
-        return is_gnrtr;
-    }
-    catch(const exception& exc) {
-        cerr << exc.what() << endl;
-
-        exit(EXIT_FAILURE);
-    }
-}
-
-void StudHelper::create_generator() {
-    string sql;
-
-    try {
-//Create connection object and initialize it
-        connection conn("dbname = " + m_dbname + " user = " + m_name + " password = " + m_password +
-                        " hostaddr = " + m_hostaddr + " port = " + m_port);
-
-//Basic check if connection is opened
-        if(!conn.is_open())
-            exit(EXIT_FAILURE);
-
-//Write SQL query
-        sql = "create or replace function id_generator(value integer) returns integer "
-                "immutable "
-                "strict "
-                "language plpgsql "
-              "as "
-              "$$ "
-              "declare "
-              "l1 int; "
-              "l2 int; "
-              "r1 int; "
-              "r2 int; "
-              "i int := 0; "
-              "begin "
-                "l1:= (value >> 12) & (4096-1); "
-                "r1:= value & (4096-1); "
-                "while i < 3 loop "
-                    "l2 := r1; "
-                    "r2 := l1 # ((((1366 * r1 + 150889) % 714025) / 714025.0) * (4096-1))::int; "
-                    "l1 := l2; "
-                    "r1 := r2; "
-                    "i := i + 1; "
-                "end loop; "
-                "return ((l1 << 12) + r1); "
-              "end; "
-              "$$;";
-
-//Create and execute transactional query
-        work wrk(conn);
-
-        wrk.exec(sql);
-        wrk.commit();
-
-        conn.close();
-    }
-    catch(const exception& exc) {
-        cerr << exc.what() << endl;
-
-        exit(EXIT_FAILURE);
-    }
-}
-
-void StudHelper::create_id() {
-    string sql;
-
-    try {
-//Create connection object and initialize it
-        connection conn("dbname = " + m_dbname + " user = " + m_name + " password = " + m_password +
-                        " hostaddr = " + m_hostaddr + " port = " + m_port);
-
-//Basic check if connection is opened
-        if(!conn.is_open())
-            exit(EXIT_FAILURE);
-
-//Write SQL query
-        sql = "create or replace function get_id(value integer, max integer, min integer) returns integer "
-                    "immutable "
-                    "strict "
-                    "language plpgsql "
-              "as "
-              "$$ "
-              "begin "
-                "loop "
-                    "value := id_generator(value); "
-                    "exit when value <= max and value >= min; "
-                    "if value = (select id from marks) then "
-                        "value := get_id(value, min, max); "
-                    "end if; "
-                    "end loop; "
-                    "return value; "
-              "end "
-              "$$;";
-
-//Create and execute transactional query
-        work wrk(conn);
-
-        wrk.exec(sql);
-        wrk.commit();
-
-        conn.close();
-    }
-    catch(const exception& exc) {
-        cerr << exc.what() << endl;
-
-        exit(EXIT_FAILURE);
-    }
-}
-
 //Check connection to database
 void StudHelper::check_connection() {
     try {
@@ -187,11 +33,6 @@ void StudHelper::check_connection() {
 //Basic check if connection is opened
         if(!conn.is_open())
             exit(EXIT_FAILURE);
-
-        if(!check_generator()) {
-            create_generator();
-            create_id();
-        }
 
         conn.close();
     }
@@ -376,8 +217,8 @@ void StudHelper::insert_data(const list<int>& marks, const string& subject) {
 
 //Automatically write SQL query depending on amount of marks
         for(const auto& val : marks) {
-            sql.append("insert into marks(id, subject, mark) values((select floor(random() * 900000 + 100000)::int)")
-                    .append(", '").append(subject).append("', ").append(to_string(val)).append(");");
+            sql.append("insert into marks(id, subject, mark) values(floor(100000 + random() * 900000)::int")
+                .append(", '").append(subject).append("', ").append(to_string(val)).append(");");
         }
 
 //Create and execute transactional query

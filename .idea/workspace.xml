@@ -13,10 +13,13 @@
   <component name="ChangeListManager">
     <list default="true" id="739f2151-24bf-4714-bc32-efa4bfa353ee" name="Default Changelist" comment="Fixed previous commit">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/StudHelper.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/StudHelper.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/StudHelper.h" beforeDir="false" afterPath="$PROJECT_DIR$/StudHelper.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/StudHelper.dir/CXX.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/StudHelper.dir/CXX.includecache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/StudHelper.dir/StudHelper.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/StudHelper.dir/StudHelper.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/StudHelper.dir/flags.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/StudHelper.dir/flags.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/StudHelper.dir/link.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/StudHelper.dir/link.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/StudHelper.dir/main.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/StudHelper.dir/main.cpp.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/StudHelper" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/StudHelper" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
@@ -62,6 +65,11 @@
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="new_ui" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1OjiyTyhIa8UlsRxEzEOf39VpTi" />
@@ -189,6 +197,8 @@
       <workItem from="1572282221709" duration="13000" />
       <workItem from="1572529682458" duration="45000" />
       <workItem from="1572529821682" duration="793000" />
+      <workItem from="1572530836756" duration="3729000" />
+      <workItem from="1572601379417" duration="2050000" />
     </task>
     <servers />
   </component>

@@ -75,9 +75,7 @@ int main() {
             cout << "Current date/time: " << ctime(&time) << endl;
             cout << "Press 'm' to go to the menu or any other button to exit the program" << endl;
 
-            int ch = getch();
-
-            if (ch == static_cast<int>('m'))
+            if (int ch = getch(); ch == static_cast<int>('m'))
                 goto preMenu;
 
             break;
@@ -91,7 +89,7 @@ int main() {
     }
 
 //Create table (if needed)
-createTable:
+    createTable:
     system("clear");
 
     cout << "Press certain button to select function:" << endl;
@@ -122,9 +120,7 @@ createTable:
             cout << "Current date/time: " << ctime(&time) << endl;
             cout << "Press 'm' to go to the menu or any other button to exit the program" << endl;
 
-            int ch = getch();
-
-            if (ch == static_cast<int>('m'))
+            if (int ch = getch(); ch == static_cast<int>('m'))
                 goto createTable;
 
             break;
@@ -153,7 +149,7 @@ createTable:
     switch(getch()) {
 //Get needed data
         case static_cast<int>('d'): {
-get_data_retry:
+            get_data_retry:
             system("clear");
 
             cout << "Press certain button to select function:" << endl;
@@ -171,9 +167,7 @@ get_data_retry:
 
                     cout << "Press 'm' to go to the menu or any other button to exit the program" << endl;
 
-                    int ch = getch();
-
-                    if (ch == static_cast<int>('m'))
+                    if (int ch = getch(); ch == static_cast<int>('m'))
                         goto menu;
 
                     break;
@@ -191,9 +185,7 @@ get_data_retry:
 
                     cout << "Press 'm' to go to the menu or any other button to exit the program" << endl;
 
-                    int ch = getch();
-
-                    if (ch == static_cast<int>('m'))
+                    if (int ch = getch(); ch == static_cast<int>('m'))
                         goto menu;
 
                     break;
@@ -235,7 +227,7 @@ get_data_retry:
         }
 //Delete needed data from the table
         case static_cast<int>('x'): {
-delete_data_retry:
+            delete_data_retry:
             system("clear");
 
             cout << "Press certain button to select function:" << endl;
@@ -300,7 +292,7 @@ delete_data_retry:
         }
 //Get needed information
         case static_cast<int>('i'): {
-info_retry:
+            info_retry:
             system("clear");
 
             cout << "Press certain button to select function:" << endl;
@@ -332,15 +324,13 @@ info_retry:
                     switch(getch()) {
 //Get information about yours academic performance considering if exam is presented in the subject
                         case static_cast<int>('y'): {
-                            system("clear");
+                           system("clear");
 
                             stud_helper.get_adv_info(subj, true);
 
                             cout << "Press 'm' to go to the menu or any other button to exit the program" << endl;
 
-                            int ch = getch();
-
-                            if (ch == static_cast<int>('m'))
+                            if (int ch = getch(); ch == static_cast<int>('m'))
                                 goto menu;
 
                             break;
@@ -353,9 +343,7 @@ info_retry:
 
                             cout << "Press 'm' to go to the menu or any other button to exit the program" << endl;
 
-                            int ch = getch();
-
-                            if (ch == static_cast<int>('m'))
+                            if (int ch = getch(); ch == static_cast<int>('m'))
                                 goto menu;
 
                             break;
@@ -381,9 +369,7 @@ info_retry:
 
                     cout << "Press 'm' to go to the menu or any other button to exit the program" << endl;
 
-                    int ch = getch();
-
-                    if (ch == static_cast<int>('m'))
+                    if (int ch = getch(); ch == static_cast<int>('m'))
                         goto menu;
 
                     break;
@@ -401,9 +387,7 @@ info_retry:
                     cout << "Current date/time: " << ctime(&time) << endl;
                     cout << "Press 'm' to go to the menu or any other button to exit the program" << endl;
 
-                    int ch = getch();
-
-                    if (ch == static_cast<int>('m'))
+                    if (int ch = getch(); ch == static_cast<int>('m'))
                         goto menu;
 
                     break;

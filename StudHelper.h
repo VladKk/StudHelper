@@ -55,11 +55,6 @@ private:
     string get_hostaddr() { return m_hostaddr; }
     string get_port() { return m_port; }
 
-//Prototypes of methods-helpers to check if ID generator exists in DB and create it (if needed)
-    bool check_generator();
-    void create_generator();
-    void create_id();
-
 public:
 //Block assignment & copying
     StudHelper(const StudHelper&) = delete;
