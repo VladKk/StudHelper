@@ -1,10 +1,6 @@
 # StudHelper
 
-Program which helps to track all the marks you'll add and give some useful information about yours academic performance.
-
-## Getting Started
-
-To start working with StudHelper, just install it from GitHub and unpack it.
+Program which helps you to track all the marks you'll add and give some useful information about yours academic performance.
 
 ### Prerequisites
 
@@ -52,7 +48,7 @@ Your PostgreSQL installation has been completed successfully.
 
 * [LibXL](http://www.libxl.com) - Excel library (served as a tool for working with MS Excel files on the early versions of StudHelper)
 * [PostgreSQL](https://www.postgresql.org) - database which StudHelper was created with
-* [SFML](https://www.sfml-dev.org) - some features (checking if port is open)
+* [SFML](https://www.sfml-dev.org) - some little features (checking if port is open etc)
 
 ## Contributing
 
@@ -72,4 +68,5 @@ For the versions available, see the [StudHelper](https://github.com/VladKk/StudH
 ## Acknowledgments
 
 * This is my first project and it has a lot of mistakes, so don't judge strictly:)
+* The program was developed and tested on Debian and I don't know how it works on other systems
 
