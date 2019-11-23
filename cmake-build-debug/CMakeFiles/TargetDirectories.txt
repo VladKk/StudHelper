@@ -1,3 +1,0 @@
-/home/vladpc/Programming/C++/Projects/StudHelper/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/home/vladpc/Programming/C++/Projects/StudHelper/cmake-build-debug/CMakeFiles/StudHelper.dir
-/home/vladpc/Programming/C++/Projects/StudHelper/cmake-build-debug/CMakeFiles/edit_cache.dir
