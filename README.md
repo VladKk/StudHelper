@@ -53,7 +53,7 @@ Your PostgreSQL installation has been completed successfully.
 ## Contributing
 
 If you have suggestions, write: 
-* GMail: **mrvlad008@gmail.com**
+* GMail: **vladislav.kolyadenko@gmail.com**
 * Telegram: **@vlad_is_real** 
 * Instagram: **@ncks_gwc**
 
@@ -63,7 +63,7 @@ For the versions available, see the [StudHelper](https://github.com/VladKk/StudH
 
 ## Authors
 
-* **Vladislav Koliadenko** - *Main developer* - [VladKk](https://github.com/VladKk)
+* **Vladislav Kolyadenko** - *Main developer* - [VladKk](https://github.com/VladKk)
 
 ## Acknowledgments
 
